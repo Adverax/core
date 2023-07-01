@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+type Schedule interface {
+	NextTick(now time.Time) time.Time
+	String() string
+}
+
 type OnceSchedule struct {
 	tick time.Time
 }

@@ -6,11 +6,6 @@ import (
 	"time"
 )
 
-type Schedule interface {
-	NextTick(now time.Time) time.Time
-	String() string
-}
-
 type Event interface {
 	Schedule
 	Name() string
@@ -36,6 +31,10 @@ func (a *Action) Name() string {
 
 func (a *Action) NextTick(now time.Time) time.Time {
 	return a.schedule.NextTick(now)
+}
+
+func (a *Action) Trigger(ctx context.Context) error {
+	return a.handler(ctx)
 }
 
 func NewAction(name string, schedule Schedule, handler func(ctx context.Context) error) *Action {
