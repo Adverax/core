@@ -5,57 +5,83 @@ import (
 	"sync"
 )
 
-type components struct {
-	mx   sync.Mutex
-	list []interface{}
+type component struct {
+	initializer func() error
+	finalizer   func()
 }
 
-func (c *components) append(component interface{}) {
+type componentCollection struct {
+	mx   sync.Mutex
+	list []*component
+	ok   bool
+}
+
+func (c *componentCollection) append(component *component) {
 	c.mx.Lock()
 	defer c.mx.Unlock()
 
 	c.list = append(c.list, component)
 }
 
-func (c *components) Init() {
+func (c *componentCollection) Init() {
 	c.mx.Lock()
 	defer c.mx.Unlock()
 
-	for _, component := range c.list {
-		if initializer, ok := component.(ComponentWithInitialization); ok {
-			initializer.InitComponent()
+	for _, cc := range c.list {
+		err := cc.initializer()
+		if err != nil {
+			c.Fail(err)
 		}
 	}
 }
 
-func (c *components) Done() {
+func (c *componentCollection) Done() {
 	c.mx.Lock()
 	defer c.mx.Unlock()
 
-	for _, component := range c.list {
-		if closer, ok := component.(ComponentWithFinalization); ok {
-			closer.CloseComponent()
-		}
+	for _, cc := range c.list {
+		cc.finalizer()
 	}
 }
 
-var Components components
-
-type ComponentWithInitialization interface {
-	InitComponent()
+func (c *componentCollection) Fail(err error) {
+	c.ok = false
+	// log.Fatal(err)
 }
 
-type ComponentWithFinalization interface {
-	CloseComponent()
+var components = new(componentCollection)
+
+func NewComponent[T interface{}](
+	constructor func() T,
+) func() T {
+	return NewComponentEx(constructor, nil, nil)
 }
 
-func NewComponent[T interface{}](builder func() T) func() T {
+func NewComponentEx[T interface{}](
+	constructor func() T,
+	initializer func(instance T) error,
+	finalizer func(),
+) func() T {
 	var instance T
 
 	return func() T {
 		if isZeroVal(instance) {
-			instance = builder()
-			Components.append(instance)
+			instance = constructor()
+			if initializer != nil || finalizer != nil {
+				components.append(&component{
+					initializer: func() error {
+						if initializer != nil {
+							return initializer(instance)
+						}
+						return nil
+					},
+					finalizer: func() {
+						if finalizer != nil {
+							finalizer()
+						}
+					},
+				})
+			}
 		}
 
 		return instance
