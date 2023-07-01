@@ -14,11 +14,10 @@ type Event interface {
 }
 
 type Action struct {
-	schedule Schedule
-	name     string
-	handler  func(ctx context.Context) error
-	active   bool
-	async    bool
+	schedule   Schedule
+	name       string
+	handler    func(ctx context.Context) error
+	executedAt time.Time
 }
 
 func (a *Action) String() string {
@@ -30,7 +29,7 @@ func (a *Action) Name() string {
 }
 
 func (a *Action) NextTick(now time.Time) time.Time {
-	return a.schedule.NextTick(now)
+	return a.schedule.NextTick(a.executedAt)
 }
 
 func (a *Action) Trigger(ctx context.Context) error {
@@ -39,17 +38,19 @@ func (a *Action) Trigger(ctx context.Context) error {
 
 func NewAction(name string, schedule Schedule, handler func(ctx context.Context) error) *Action {
 	return &Action{
-		schedule: schedule,
-		name:     name,
-		handler:  handler,
+		schedule:   schedule,
+		name:       name,
+		handler:    handler,
+		executedAt: time.Now(),
 	}
 }
 
 type AsyncAction struct {
-	schedule Schedule
-	name     string
-	handler  func(ctx context.Context) error
-	active   bool
+	schedule   Schedule
+	name       string
+	handler    func(ctx context.Context) error
+	active     bool
+	executedAt time.Time
 }
 
 func (a *AsyncAction) String() string {
@@ -73,6 +74,7 @@ func (a *AsyncAction) Trigger(ctx context.Context) error {
 	go func() {
 		defer func() {
 			a.active = false
+			a.executedAt = time.Now()
 		}()
 
 		err := a.handler(ctx)
@@ -86,9 +88,10 @@ func (a *AsyncAction) Trigger(ctx context.Context) error {
 
 func NewAsyncAction(name string, schedule Schedule, handler func(ctx context.Context) error) *AsyncAction {
 	return &AsyncAction{
-		schedule: schedule,
-		name:     name,
-		handler:  handler,
+		schedule:   schedule,
+		name:       name,
+		handler:    handler,
+		executedAt: time.Now(),
 	}
 }
 

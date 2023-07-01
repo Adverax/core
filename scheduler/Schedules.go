@@ -3,7 +3,6 @@ package scheduler
 import (
 	"fmt"
 	"github.com/robfig/cron"
-	"roketus/go-common/worker"
 	"time"
 )
 
@@ -57,7 +56,7 @@ func (s *CronSchedule) String() string {
 	return fmt.Sprintf("cron %q", s.cron)
 }
 
-func NewCronSchedule(spec string) (worker.Schedule, error) {
+func NewCronSchedule(spec string) (Schedule, error) {
 	s, err := cron.ParseStandard(spec)
 	if err != nil {
 		return nil, err
