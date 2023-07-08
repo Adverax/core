@@ -20,10 +20,7 @@ type pubsub[T any] struct {
 	closed bool
 }
 
-func (that *pubsub[T]) Subscribe(
-	ctx context.Context,
-	handler Handler[T],
-) {
+func (that *pubsub[T]) Subscribe(ctx context.Context, handler Handler[T]) {
 	go func(ch <-chan T) {
 		for {
 			select {
