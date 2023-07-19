@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-type CumulativeTransactionType string
+type TransactionType string
 
 const (
-	Increment CumulativeTransactionType = "increment"
-	Decrement                           = "decrement"
-	Reset                               = "reset"
+	Increment TransactionType = "increment"
+	Decrement                 = "decrement"
+	Reset                     = "reset"
 )
 
-var CumulativeTransactionsTypes = NewEnum[CumulativeTransactionType](
+var CumulativeTransactionTypes = NewEnum[TransactionType](
 	Increment,
 	Decrement,
 	Reset,
@@ -21,17 +21,17 @@ var CumulativeTransactionsTypes = NewEnum[CumulativeTransactionType](
 
 func BenchmarkEnum_GetAll(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		CumulativeTransactionsTypes.GetAll()
+		CumulativeTransactionTypes.GetAll()
 	}
 }
 
 func TestEnum_Of_WithMemberShouldBeValid(t *testing.T) {
-	v, err := CumulativeTransactionsTypes.Of("increment")
+	v, err := CumulativeTransactionTypes.Of("increment")
 	assert.NoError(t, err)
 	assert.Equal(t, Increment, v)
 }
 
 func TestEnum_Of_WithNonMemberShouldBeError(t *testing.T) {
-	_, err := CumulativeTransactionsTypes.Of("unknown")
+	_, err := CumulativeTransactionTypes.Of("unknown")
 	assert.Error(t, err)
 }

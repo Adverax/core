@@ -1,8 +1,9 @@
-module my/core
+module core
 
 go 1.19
 
 require (
+	github.com/google/uuid v1.3.0
 	github.com/robfig/cron v1.2.0
 	github.com/stretchr/testify v1.8.4
 )
