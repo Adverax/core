@@ -102,3 +102,7 @@ func Check(errs ...error) error {
 	es := NewErrors()
 	return es.Check(errs...)
 }
+
+var (
+	ErrNoMatch = errors.New("no match")
+)
