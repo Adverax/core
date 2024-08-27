@@ -7,7 +7,6 @@ import (
 	"core/types"
 	"crypto/md5"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"reflect"
 	"strings"
@@ -454,7 +453,7 @@ func NewMapFromFiles(files ...string) (m Map, err error) {
 
 // NewMapFromFile returns map, that loaded from file
 func NewMapFromFile(filename string) (Map, error) {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("ReadFile: %w", err)
 	}
