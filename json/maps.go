@@ -45,11 +45,11 @@ func (that Map) SaveToFile(filename string) error {
 	return nil
 }
 
-func (that Map) Marshal() (RawMessage, error) {
+func (that Map) Marshal() ([]byte, error) {
 	return Marshal(that)
 }
 
-func (that Map) MarshalIndent() (RawMessage, error) {
+func (that Map) MarshalIndent() ([]byte, error) {
 	return MarshalIndent(that)
 }
 
@@ -57,7 +57,7 @@ func (that Map) Unmarshal(data []byte) error {
 	return Unmarshal(data, &that)
 }
 
-func (that Map) Json() (RawMessage, error) {
+func (that Map) Json() ([]byte, error) {
 	res, err := Marshal(that)
 	if err != nil {
 		return nil, fmt.Errorf("Marshal: %w", err)
@@ -230,8 +230,8 @@ func (that Map) ToDuration(
 func (that Map) ToJson(
 	ctx context.Context,
 	name string,
-	defVal RawMessage,
-) RawMessage {
+	defVal []byte,
+) []byte {
 	val, err := that.GetProperty(ctx, name)
 	if err != nil || val == nil {
 		return defVal
@@ -340,8 +340,8 @@ func (that Map) GetDuration(
 func (that Map) GetJson(
 	ctx context.Context,
 	name string,
-	defVal RawMessage,
-) (res RawMessage, err error) {
+	defVal []byte,
+) (res []byte, err error) {
 	return types.Type.Json.Get(ctx, that, name, defVal)
 }
 
@@ -388,7 +388,7 @@ func (that Map) SetDuration(
 func (that Map) SetJson(
 	ctx context.Context,
 	name string,
-	value RawMessage,
+	value []byte,
 ) error {
 	return that.SetProperty(ctx, name, value)
 }
@@ -429,7 +429,7 @@ func (that Map) Clone() Map {
 }
 
 // NewMap is constructor for creating Map from JSON source.
-func NewMap(source RawMessage) (Map, error) {
+func NewMap(source []byte) (Map, error) {
 	var res map[string]interface{}
 	err := Unmarshal(source, &res)
 	//	err := JsonUnmarshal([]byte(source), &res)
@@ -468,7 +468,7 @@ func NewMapFromFile(filename string) (Map, error) {
 }
 
 // NewMaps is constructor for creating Maps from JSON source.
-func NewMaps(source RawMessage) ([]Map, error) {
+func NewMaps(source []byte) ([]Map, error) {
 	var res []RawMessage
 	err := Unmarshal(source, &res)
 	if err != nil {

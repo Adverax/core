@@ -59,7 +59,7 @@ func MarshalIndent(value interface{}) ([]byte, error) {
 // It takes a document and a function that takes a Map and returns an error.
 // Example: Update(doc, func(m Map) error { m["key"] = "value"; return nil })
 func Update(
-	doc RawMessage,
+	doc []byte,
 	actions ...func(Map) error,
 ) ([]byte, error) {
 	m, err := NewMap(doc)
@@ -118,10 +118,10 @@ func UpdateValues(
 // Get is a helper function to extract a value from a JSON document.
 // Example: Get(doc, GetInteger("key", 0))
 func Get[T any](
-	document RawMessage,
+	doc []byte,
 	getter func(Map) (T, error),
 ) (val T, err error) {
-	m, err := NewMap(document)
+	m, err := NewMap(doc)
 	if err != nil {
 		return val, fmt.Errorf("NewMapFromJson: %w", err)
 	}
@@ -138,11 +138,11 @@ func Get[T any](
 // It takes a document and a list of setter functions.
 // Example: Set(doc, Override("key", "value"), JsonDefault("key2", "value2"))
 func Set(
-	document []byte,
+	doc []byte,
 	setter ...func(doc Map) error,
 ) ([]byte, error) {
 	res, err := Update(
-		document,
+		doc,
 		func(recData Map) error {
 			for _, set := range setter {
 				if err := set(recData); err != nil {
@@ -268,7 +268,7 @@ func TypeOf(in io.Reader) (Type, error) {
 }
 
 // AsArray is a helper function to ensure a JSON document is an array.
-func AsArray(data RawMessage) (RawMessage, error) {
+func AsArray(data []byte) ([]byte, error) {
 	isArray, err := IsArray(data)
 	if err != nil {
 		return nil, fmt.Errorf("JsonIsArray: %w", err)
@@ -277,11 +277,11 @@ func AsArray(data RawMessage) (RawMessage, error) {
 		return data, nil
 	}
 
-	return RawMessage(fmt.Sprintf("[%s]", string(data))), nil
+	return []byte(fmt.Sprintf("[%s]", string(data))), nil
 }
 
 // IsArray is a helper function to determine if a JSON document is an array.
-func IsArray(raw RawMessage) (bool, error) {
+func IsArray(raw []byte) (bool, error) {
 	if len(raw) == 0 {
 		return false, nil
 	}
@@ -293,7 +293,7 @@ func IsArray(raw RawMessage) (bool, error) {
 }
 
 // IsObject is a helper function to determine if a JSON document is an object.
-func IsObject(raw RawMessage) (bool, error) {
+func IsObject(raw []byte) (bool, error) {
 	if len(raw) == 0 {
 		return false, nil
 	}
@@ -305,10 +305,10 @@ func IsObject(raw RawMessage) (bool, error) {
 }
 
 // Empty is empty document
-var Empty = RawMessage("{}")
+var Empty = []byte("{}")
 
-func IsEmpty(document []byte) bool {
-	return len(document) <= 2
+func IsEmpty(doc []byte) bool {
+	return len(doc) <= 2
 }
 
 // CoalesceString is a helper function to coalesce a string from multiple documents.
@@ -343,7 +343,7 @@ func RestoreString(ctx context.Context, path string, docs ...Map) error {
 	return nil
 }
 
-func Normalize(data RawMessage) (RawMessage, error) {
+func Normalize(data []byte) ([]byte, error) {
 	m, err := NewMap(data)
 	if err != nil {
 		return nil, err
@@ -352,7 +352,7 @@ func Normalize(data RawMessage) (RawMessage, error) {
 	return MarshalIndent(m)
 }
 
-func IsEqual(a, b RawMessage) bool {
+func IsEqual(a, b []byte) bool {
 	aa, err := Normalize(a)
 	if err != nil {
 		return false
@@ -367,7 +367,7 @@ func IsEqual(a, b RawMessage) bool {
 }
 
 // Merge is a helper function to merge JSON documents.
-func Merge(values ...RawMessage) (RawMessage, error) {
+func Merge(values ...[]byte) ([]byte, error) {
 	res := Map{}
 	for i, raw := range values {
 		m, err := NewMap(raw)
