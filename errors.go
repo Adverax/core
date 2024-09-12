@@ -104,5 +104,6 @@ func Check(errs ...error) error {
 }
 
 var (
-	ErrNoMatch = errors.New("no match")
+	ErrNoMatch   = errors.New("no match")
+	ErrDuplicate = errors.New("duplicate")
 )

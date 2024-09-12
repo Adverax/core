@@ -186,6 +186,15 @@ func Default(key string, val interface{}) func(Map) error {
 	}
 }
 
+// If is a helper function to conditionally execute an action.
+// See Set for more information.
+func If(cond bool, action func(Map) error) func(Map) error {
+	if cond {
+		return action
+	}
+	return dummyAction
+}
+
 // GetInteger is a helper function to extract an integer from a JSON document.
 // See Get for more information.
 func GetInteger(key string, defVal int64) func(Map) (int64, error) {
@@ -382,3 +391,7 @@ func Merge(values ...[]byte) ([]byte, error) {
 	}
 	return res.Json()
 }
+
+var (
+	dummyAction = func(Map) error { return nil }
+)
