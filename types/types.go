@@ -1,8 +1,8 @@
 package types
 
 import (
+	"adverax/core/generic"
 	"context"
-	"core/generic"
 	"encoding/json"
 	"time"
 )

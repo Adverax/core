@@ -1,13 +1,12 @@
-module core
+module adverax/core
 
 go 1.19
 
 require (
-	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.12
 	github.com/robfig/cron v1.2.0
+	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.8.4
-	github.com/yosuke-furukawa/json5 v0.1.1
 )
 
 require (

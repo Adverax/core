@@ -1,10 +1,10 @@
 package json
 
 import (
+	"adverax/core"
+	"adverax/core/generic"
 	"bytes"
 	"context"
-	"core"
-	"core/generic"
 	"encoding/json"
 	"errors"
 	"fmt"

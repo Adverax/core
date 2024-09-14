@@ -1,7 +1,7 @@
 package json
 
 import (
-	"core/types"
+	"adverax/core/types"
 	"encoding/json"
 	"errors"
 )
