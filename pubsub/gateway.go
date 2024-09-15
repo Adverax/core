@@ -1,9 +1,9 @@
 package pubsub
 
 import (
-	"adverax/core"
-	"adverax/core/json"
 	"context"
+	"github.com/adverax/core"
+	"github.com/adverax/core/json"
 	"reflect"
 )
 

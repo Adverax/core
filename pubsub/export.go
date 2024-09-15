@@ -1,8 +1,8 @@
 package pubsub
 
 import (
-	"adverax/core/json"
 	"context"
+	"github.com/adverax/core/json"
 	"sync"
 )
 

@@ -1,11 +1,11 @@
 package log
 
 import (
-	"adverax/core/json"
 	"bytes"
 	"compress/gzip"
 	json2 "encoding/json"
 	"fmt"
+	"github.com/adverax/core/json"
 	"io"
 	"os"
 	"path/filepath"

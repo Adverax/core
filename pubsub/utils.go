@@ -1,7 +1,7 @@
 package pubsub
 
 import (
-	"adverax/core/json"
+	"github.com/adverax/core/json"
 )
 
 func parse[T any](data []byte) (T, error) {

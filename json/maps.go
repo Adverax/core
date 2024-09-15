@@ -1,12 +1,12 @@
 package json
 
 import (
-	"adverax/core"
-	"adverax/core/generic"
-	"adverax/core/types"
 	"context"
 	"crypto/md5"
 	"fmt"
+	"github.com/adverax/core"
+	"github.com/adverax/core/generic"
+	"github.com/adverax/core/types"
 	"os"
 	"reflect"
 	"strings"

@@ -1,10 +1,10 @@
 package log
 
 import (
-	"adverax/core/log/logrus"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/adverax/core/log/logrus"
 	"strings"
 )
 

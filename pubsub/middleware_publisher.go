@@ -1,9 +1,9 @@
 package pubsub
 
 import (
-	"adverax/core/json"
-	"adverax/core/log"
 	"context"
+	"github.com/adverax/core/json"
+	"github.com/adverax/core/log"
 )
 
 type PublisherHandler[T any] interface {

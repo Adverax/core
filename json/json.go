@@ -1,13 +1,13 @@
 package json
 
 import (
-	"adverax/core"
-	"adverax/core/generic"
 	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/adverax/core"
+	"github.com/adverax/core/generic"
 	jsoniter "github.com/json-iterator/go"
 	"io"
 )

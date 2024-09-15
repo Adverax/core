@@ -1,10 +1,10 @@
 package json
 
 import (
-	"adverax/core/types"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/adverax/core/types"
 	"reflect"
 	"strings"
 )

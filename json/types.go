@@ -1,9 +1,9 @@
 package json
 
 import (
-	"adverax/core/types"
 	"encoding/json"
 	"errors"
+	"github.com/adverax/core/types"
 )
 
 type Number = json.Number

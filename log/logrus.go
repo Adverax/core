@@ -1,7 +1,7 @@
 package log
 
 import (
-	"adverax/core/log/logrus"
+	"github.com/adverax/core/log/logrus"
 	"io"
 	log2 "log"
 )

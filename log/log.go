@@ -1,8 +1,8 @@
 package log
 
 import (
-	"adverax/core/log/logrus"
 	"context"
+	"github.com/adverax/core/log/logrus"
 )
 
 const (
