@@ -2,7 +2,7 @@ package pubsub
 
 import (
 	"context"
-	"github.com/adverax/core"
+	"github.com/Adverax/core"
 )
 
 type Subscription[T any] struct {

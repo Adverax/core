@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/adverax/core/log/logrus"
+	"github.com/Adverax/core/log/logrus"
 	"strings"
 )
 

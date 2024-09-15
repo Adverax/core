@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"github.com/adverax/core"
+	"github.com/Adverax/core"
 	"sync"
 	"time"
 )

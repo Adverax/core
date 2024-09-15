@@ -3,7 +3,7 @@ package types
 import (
 	"context"
 	"encoding/json"
-	"github.com/adverax/core/generic"
+	"github.com/Adverax/core/generic"
 	"time"
 )
 

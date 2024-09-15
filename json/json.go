@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/adverax/core"
-	"github.com/adverax/core/generic"
+	"github.com/Adverax/core"
+	"github.com/Adverax/core/generic"
 	jsoniter "github.com/json-iterator/go"
 	"io"
 )

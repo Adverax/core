@@ -2,7 +2,7 @@ package pubsub
 
 import (
 	"fmt"
-	"github.com/adverax/core"
+	"github.com/Adverax/core"
 )
 
 type Builder[T any] struct {

@@ -1,4 +1,4 @@
-module github.com/adverax/core
+module github.com/Adverax/core
 
 go 1.19
 

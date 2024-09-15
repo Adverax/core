@@ -1,7 +1,7 @@
 package hyphenations
 
 import (
-	"github.com/adverax/core"
+	"github.com/Adverax/core"
 	"regexp"
 )
 

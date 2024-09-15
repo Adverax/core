@@ -2,8 +2,8 @@ package pubsub
 
 import (
 	"context"
-	"github.com/adverax/core/generic"
-	"github.com/adverax/core/json"
+	"github.com/Adverax/core/generic"
+	"github.com/Adverax/core/json"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

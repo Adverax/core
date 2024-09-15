@@ -3,7 +3,7 @@ package json
 import (
 	"encoding/json"
 	"errors"
-	"github.com/adverax/core/types"
+	"github.com/Adverax/core/types"
 )
 
 type Number = json.Number

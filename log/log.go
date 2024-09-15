@@ -2,7 +2,7 @@ package log
 
 import (
 	"context"
-	"github.com/adverax/core/log/logrus"
+	"github.com/Adverax/core/log/logrus"
 )
 
 const (

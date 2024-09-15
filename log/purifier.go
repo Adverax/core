@@ -5,7 +5,7 @@ import (
 	"compress/gzip"
 	json2 "encoding/json"
 	"fmt"
-	"github.com/adverax/core/json"
+	"github.com/Adverax/core/json"
 	"io"
 	"os"
 	"path/filepath"
