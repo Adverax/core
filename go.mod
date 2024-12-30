@@ -1,4 +1,4 @@
-module github.com/Adverax/core
+module github.com/adverax/core
 
 go 1.21.6
 
