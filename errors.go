@@ -92,6 +92,31 @@ func Must[T any](e T, err error) T {
 	return e
 }
 
+type WantItem[T any] struct {
+	value T
+	err   error
+}
+
+func Want[T any](value T, err error) *WantItem[T] {
+	return &WantItem[T]{value: value, err: err}
+}
+
+func WantAll[T any](items ...*WantItem[T]) ([]T, error) {
+	var errs *Errors
+	res := make([]T, 0, len(items))
+	for _, item := range items {
+		if item.err != nil {
+			if errs == nil {
+				errs = NewErrors()
+			}
+			errs.AddError(item.err)
+		} else {
+			res = append(res, item.value)
+		}
+	}
+	return res, errs.ResError()
+}
+
 type ErrorHandler interface {
 	HandleError(ctx context.Context, err error)
 }
