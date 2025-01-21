@@ -1,4 +1,4 @@
-package yaml
+package yamlSource
 
 import (
 	"bytes"
@@ -20,7 +20,7 @@ func New(fetcher Fetcher) *Engine {
 }
 
 func (that *Engine) Fetch() (map[string]interface{}, error) {
-	data := map[string]interface{}{}
+	data := make(map[string]interface{})
 
 	source, err := that.fetcher.Fetch()
 	if err != nil {
