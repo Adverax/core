@@ -14,19 +14,15 @@ type Accumulator interface {
 	Result() map[string]interface{}
 }
 
-type Consumer interface {
-	Start() Accumulator
-}
-
 type Engine struct {
-	guard    Guard
-	consumer Consumer
+	guard       Guard
+	accumulator Accumulator
 }
 
-func New(guard Guard, consumer Consumer) *Engine {
+func New(guard Guard, accumulator Accumulator) *Engine {
 	return &Engine{
-		guard:    guard,
-		consumer: consumer,
+		guard:       guard,
+		accumulator: accumulator,
 	}
 }
 
@@ -35,8 +31,6 @@ func (that *Engine) Fetch() (map[string]interface{}, error) {
 }
 
 func (that *Engine) fetch(es []string) (map[string]interface{}, error) {
-	accumulator := that.consumer.Start()
-
 	for _, e := range es {
 		ss := strings.Split(e, "=")
 		if len(ss) < 2 {
@@ -48,8 +42,8 @@ func (that *Engine) fetch(es []string) (map[string]interface{}, error) {
 			continue
 		}
 
-		accumulator.Add(key, ss[1])
+		that.accumulator.Add(key, ss[1])
 	}
 
-	return accumulator.Result(), nil
+	return that.accumulator.Result(), nil
 }
