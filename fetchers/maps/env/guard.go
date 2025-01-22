@@ -1,4 +1,4 @@
-package envSource
+package envFetcher
 
 import "strings"
 

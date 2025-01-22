@@ -1,4 +1,4 @@
-package jsonSource
+package jsonFetcher
 
 import (
 	"bytes"

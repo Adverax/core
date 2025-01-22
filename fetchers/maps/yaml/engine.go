@@ -1,4 +1,4 @@
-package yamlSource
+package yamlFetcher
 
 import (
 	"bytes"
