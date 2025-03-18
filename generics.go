@@ -2,30 +2,30 @@ package core
 
 var NULL interface{}
 
-type Float interface {
+type FLOAT interface {
 	~float64 | ~float32
 }
 
-type Integer interface {
+type INTEGER interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
 }
 
-type Numeric interface {
-	Float | Integer
+type NUMERIC interface {
+	FLOAT | INTEGER
 }
 
-type Ordered interface {
-	Integer | Float | ~string
+type ORDERED interface {
+	NUMERIC | ~string
 }
 
-func Max[T Numeric](a, b T) T {
+func Max[T NUMERIC](a, b T) T {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func Min[T Numeric](a, b T) T {
+func Min[T NUMERIC](a, b T) T {
 	if a < b {
 		return a
 	}
@@ -65,7 +65,7 @@ func Append[T comparable](vals []T, val T) []T {
 	return append(vals, val)
 }
 
-func Compare[T Ordered](a, b T) int {
+func Compare[T ORDERED](a, b T) int {
 	if a == b {
 		return 0
 	}
@@ -73,4 +73,11 @@ func Compare[T Ordered](a, b T) int {
 		return -1
 	}
 	return 1
+}
+
+func Must[T any](val T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return val
 }

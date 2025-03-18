@@ -22,13 +22,3 @@ func (that *nonCancelableContext) Done() <-chan struct{} {
 }
 
 var dummyDone = make(chan struct{})
-
-type Aggregator[T any] interface {
-	Aggregate(ctx context.Context, value T) error
-}
-
-type AggregatorFunc[T any] func(context.Context, T) error
-
-func (fn AggregatorFunc[T]) Aggregate(ctx context.Context, value T) error {
-	return fn(ctx, value)
-}
